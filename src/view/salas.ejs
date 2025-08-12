@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Salas Disponíveis</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .sala-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      width: 220px;
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+    }
+    .sala-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgb(0 0 0 / 0.15);
+    }
+    .status {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .livre {
+      background-color: #4caf50;
+    }
+    .ocupado {
+      background-color: #f44336;
+    }
+  </style>
+</head>
+<body>
+  <% if (salas.length === 0) { %>
+    <p>Nenhuma sala cadastrada.</p>
+  <% } else { %>
+    <% salas.forEach(sala => { %>
+      <a href="/salas/<%= sala._id %>" class="sala-card">
+        <h3><%= sala.nome %></h3>
+        <p>Capacidade: <%= sala.capacidade %></p>
+        <p>Recursos: <%= sala.recursos.join(', ') %></p>
+        <span class="status <%= sala.status %>"><%= sala.status.charAt(0).toUpperCase() + sala.status.slice(1) %></span>
+      </a>
+    <% }) %>
+  <% } %>
+</body>
+</html>

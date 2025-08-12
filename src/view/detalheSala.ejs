@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detalhes da Sala - <%= sala.nome %></title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+    .container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 500px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+    p {
+      font-size: 16px;
+      margin: 8px 0;
+      color: #555;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 20px 0;
+      color: #555;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #4caf50;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: #45a049;
+    }
+    a {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #777;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><%= sala.nome %></h1>
+    <p><strong>Capacidade:</strong> <%= sala.capacidade %> pessoas</p>
+    <p><strong>Recursos:</strong></p>
+    <ul>
+      <% sala.recursos.forEach(function(recurso) { %>
+        <li>- <%= recurso %></li>
+      <% }) %>
+    </ul>
+    <p><strong>Status:</strong> <%= sala.status %></p>
+
+    <% if (sala.status === 'livre') { %>
+      <form action="/salas/<%= sala._id %>/reservar" method="POST">
+        <button type="submit">Reservar Sala</button>
+      </form>
+    <% } else { %>
+      <button disabled>Sala Ocupada</button>
+    <% } %>
+
+    <a href="/salas">← Voltar para lista de salas</a>
+  </div>
+</body>
+</html>

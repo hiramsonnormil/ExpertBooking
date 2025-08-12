@@ -1,0 +1,25 @@
+{
+  "name": "locaca-sala",
+  "version": "1.0.0",
+  "description": "sistema locacao salas",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "dev",
+    "dev": "nodemon index.js"
+  },
+  "author": "hiramsonn",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.13.0",
+    "bcrypt": "^6.0.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.1",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.13.0"
+  }
+}
