@@ -24,7 +24,12 @@ export async function cadastrarUsuario(req, res) {
     });
 
     await novoUsuario.save();
-    return res.redirect('/');
+    req.session.usuario = {
+      id: novoUsuario._id,
+      nome: novoUsuario.nome,
+      email: novoUsuario.email
+    };
+    return res.redirect('/salas');
 
   } catch (error) {
     console.error(error);

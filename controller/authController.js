@@ -18,8 +18,13 @@ export async function login(req, res) {
     if (!senhaValida) {
       return res.status(401).send("Senha incorreta");
     }
+    req.session.usuario = {
+      id: usuario._id,
+      nome: usuario.nome,
+      email: usuario.email
+    };
+    return res.redirect('/salas');
 
-    res.send("Login realizado com sucesso");
   } catch (err) {
     console.error(err);
     res.status(500).send("Erro no servidor");

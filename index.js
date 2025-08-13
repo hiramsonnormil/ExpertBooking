@@ -7,7 +7,7 @@ import session from 'express-session';
 
 import { login } from './controller/authController.js';
 import { cadastrarUsuario } from './controller/signupController.js';
-import { autenticarToken } from './middlewares/autenticarToken.js';
+import { autenticar } from './middlewares/routeProtection.js';
 import * as salaController from './controller/salaController.js';
 
 
@@ -28,13 +28,14 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60,
+    maxAge: 1000 * 60 * 60 * 2, // 2 horas
+    httpOnly: true,
     secure: process.env.NODE_ENV === "production"
   }
 }));
 
-
 app.use('/assets', express.static(path.join(__dirname, 'src/assets')));
+app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/view'));
@@ -42,12 +43,12 @@ app.set('views', path.join(__dirname, 'src/view'));
 app.get('/', (req, res) => res.render('login'));
 app.get('/create', (req, res) => res.render('cadastro'));
 
-app.use('/login', login);
-app.use('/signup', cadastrarUsuario);
+app.post('/login', login);
+app.post('/signup', cadastrarUsuario);
 
-app.get('/salas', salaController.listarSalas);
-app.get('/salas/:id', salaController.detalheSala);
-app.post('/salas/:id/reservar', salaController.reservarSala);
+app.get('/salas',autenticar, salaController.listarSalas);
+app.get('/salas/:id',autenticar, salaController.detalheSala);
+app.post('/salas/:id/reservar',autenticar, salaController.reservarSala);
 
 
 
