@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7fafc;
+      min-height: 100vh;
+    }
+    .navbar {
+      background: white;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-brand {
+      font-size: 24px;
+      font-weight: 700;
+      color: #667eea;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-user {
+      color: #4a5568;
+      font-weight: 500;
+    }
+    .btn-ghost {
+      background: none;
+      border: 1px solid #e2e8f0;
+      color: #4a5568;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-ghost:hover {
+      background: #f7fafc;
+      border-color: #cbd5e0;
+    }
+    .main-content {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #667eea;
+      text-decoration: none;
+      margin-bottom: 32px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: #764ba2;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+    .page-subtitle {
+      color: #718096;
+    }
+    .room-preview {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .room-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .room-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+    }
+    .room-details h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 4px;
+    }
+    .room-details p {
+      color: #718096;
+    }
+    .room-type {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #edf2f7;
+      color: #4a5568;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .room-type.premium {
+      background: #ffd89b;
+      color: #744210;
+    }
+    .booking-form {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .form-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 24px;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #2d3748;
+    }
+    .form-input,
+    .form-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.2s;
+      background: white;
+    }
+    .form-input:focus,
+    .form-select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .duration-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .duration-option {
+      position: relative;
+    }
+    .duration-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+    .duration-option label {
+      display: block;
+      padding: 12px;
+      text-align: center;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .duration-option input[type="radio"]:checked + label {
+      border-color: #667eea;
+      background: #eef2ff;
+      color: #667eea;
+    }
+    .form-help {
+      font-size: 14px;
+      color: #718096;
+      margin-top: 4px;
+    }
+    .booking-summary {
+      background: #f7fafc;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .summary-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 12px;
+    }
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: #4a5568;
+    }
+    .summary-item.total {
+      font-weight: 600;
+      color: #2d3748;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+    }
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    .alert-error {
+      background: #fed7d7;
+      color: #e53e3e;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      border: 1px solid #feb2b2;
+    }
+    @media (max-width: 768px) {
+      .nav-user { display: none; }
+      .main-content { padding: 24px 16px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .duration-options { grid-template-columns: repeat(2, 1fr); }
+      .booking-form { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/rooms" class="nav-brand">
+        <i class="fas fa-building"></i>
+        ExpertBooking
+      </a>
+      <div class="nav-menu">
+        <span class="nav-user">Olá, <%= user.name %>!</span>
+        <form method="POST" action="/auth/logout">
+          <button type="submit" class="btn-ghost">
+            <i class="fas fa-sign-out-alt"></i>
+            Sair
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <a href="/rooms/<%= room._id %>" class="back-link">
+      <i class="fas fa-arrow-left"></i>
+      Voltar aos detalhes
+    </a>
+
+    <div class="page-header">
+      <h1 class="page-title">Reservar Sala</h1>
+      <p class="page-subtitle">Preencha os dados abaixo para fazer sua reserva</p>
+    </div>
+
+    <div class="room-preview">
+      <div class="room-info">
+        <div class="room-icon">
+          <i class="fas fa-<%= room.type === 'premium' ? 'crown' : 'door-open' %>"></i>
+        </div>
+        <div class="room-details">
+          <h3><%= room.name %></h3>
+          <p>Capacidade: <%= room.capacity %> pessoas</p>
+        </div>
+        <span class="room-type <%= room.type %>">
+          <%= room.type === 'premium' ? 'Premium' : 'Básica' %>
+        </span>
+      </div>
+    </div>
+
+    <% if (locals.error) { %>
+      <div class="alert-error">
+        <i class="fas fa-exclamation-circle"></i>
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form method="POST" action="/rooms/<%= room._id %>/book" class="booking-form" id="bookingForm">
+      <h2 class="form-title">Dados da Reserva</h2>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="date">Data da Reserva</label>
+          <input type="date" id="date" name="date" class="form-input" required>
+          <div class="form-help">Selecione a data desejada</div>
+        </div>
+
+        <div class="form-group">
+          <label for="startTime">Horário de Início</label>
+          <input type="time" id="startTime" name="startTime" class="form-input" required>
+          <div class="form-help">Horário de início da reserva</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="duration">Duração da Reserva</label>
+        <div class="duration-options">
+          <div class="duration-option">
+            <input type="radio" id="duration1" name="duration" value="1" required>
+            <label for="duration1">1 hora</label>
+          </div>
+          <div class="duration-option">
+            <input type="radio" id="duration2" name="duration" value="2">
+            <label for="duration2">2 horas</label>
+          </div>
+          <div class="duration-option">
+            <input type="radio" id="duration3" name="duration" value="3">
+            <label for="duration3">3 horas</label>
+          </div>
+          <div class="duration-option">
+            <input type="radio" id="duration4" name="duration" value="4">
+            <label for="duration4">4 horas</label>
+          </div>
+          <div class="duration-option">
+            <input type="radio" id="duration6" name="duration" value="6">
+            <label for="duration6">6 horas</label>
+          </div>
+          <div class="duration-option">
+            <input type="radio" id="duration8" name="duration" value="8">
+            <label for="duration8">8 horas</label>
+          </div>
+        </div>
+        <div class="form-help">Escolha a duração da sua reserva (máximo 12 horas)</div>
+      </div>
+
+      <div class="booking-summary" id="summary" style="display: none;">
+        <div class="summary-title">Resumo da Reserva</div>
+        <div class="summary-item">
+          <span>Sala:</span>
+          <span><%= room.name %></span>
+        </div>
+        <div class="summary-item">
+          <span>Data:</span>
+          <span id="summaryDate">-</span>
+        </div>
+        <div class="summary-item">
+          <span>Horário:</span>
+          <span id="summaryTime">-</span>
+        </div>
+        <div class="summary-item">
+          <span>Duração:</span>
+          <span id="summaryDuration">-</span>
+        </div>
+        <div class="summary-item total">
+          <span>Horário de Término:</span>
+          <span id="summaryEndTime">-</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">
+        <i class="fas fa-calendar-check"></i>
+        Confirmar Reserva
+      </button>
+    </form>
+  </main>
+
+  <script>
+    // Definir data mínima como hoje
+    document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+    // Atualizar resumo da reserva
+    function updateSummary() {
+      const date = document.getElementById('date').value;
+      const startTime = document.getElementById('startTime').value;
+      const duration = document.querySelector('input[name="duration"]:checked')?.value;
+      
+      if (date && startTime && duration) {
+        const startDateTime = new Date(`${date}T${startTime}`);
+        const endDateTime = new Date(startDateTime.getTime() + (parseInt(duration) * 60 * 60 * 1000));
+        
+        document.getElementById('summaryDate').textContent = new Date(date).toLocaleDateString('pt-BR');
+        document.getElementById('summaryTime').textContent = startTime;
+        document.getElementById('summaryDuration').textContent = `${duration} hora${duration > 1 ? 's' : ''}`;
+        document.getElementById('summaryEndTime').textContent = endDateTime.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        
+        document.getElementById('summary').style.display = 'block';
+      } else {
+        document.getElementById('summary').style.display = 'none';
+      }
+    }
+
+    // Event listeners
+    document.getElementById('date').addEventListener('change', updateSummary);
+    document.getElementById('startTime').addEventListener('change', updateSummary);
+    document.querySelectorAll('input[name="duration"]').forEach(radio => {
+      radio.addEventListener('change', updateSummary);
+    });
+
+    // Validação do formulário
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      const date = document.getElementById('date').value;
+      const startTime = document.getElementById('startTime').value;
+      const duration = document.querySelector('input[name="duration"]:checked');
+      
+      if (!duration) {
+        e.preventDefault();
+        alert('Por favor, selecione a duração da reserva.');
+        return;
+      }
+
+      const selectedDateTime = new Date(`${date}T${startTime}`);
+      const now = new Date();
+      
+      if (selectedDateTime <= now) {
+        e.preventDefault();
+        alert('Não é possível fazer reservas para datas e horários passados.');
+        return;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title || 'ExpertBooking' %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="/css/main.css" rel="stylesheet">
+  <%- locals.extraCSS || '' %>
+</head>
+<body>
+  <% if (locals.user) { %>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="/rooms" class="nav-brand">
+          <i class="fas fa-building"></i>
+          ExpertBooking
+        </a>
+        <div class="nav-menu">
+          <span class="nav-user">Olá, <%= user.name %>!</span>
+          <form method="POST" action="/auth/logout" class="nav-logout">
+            <button type="submit" class="btn btn-ghost">
+              <i class="fas fa-sign-out-alt"></i>
+              Sair
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  <% } %>
+
+  <main class="main-content">
+    <%- body %>
+  </main>
+
+  <%- locals.extraJS || '' %>
+</body>
+</html>

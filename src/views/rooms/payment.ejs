@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+      animation: backgroundShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { opacity: 1; transform: translateY(0px); }
+      50% { opacity: 0.8; transform: translateY(-20px); }
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-brand i {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-user {
+      color: #4a5568;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-logout {
+      color: #e53e3e;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      background: rgba(229, 62, 62, 0.1);
+    }
+
+    .btn-logout:hover {
+      background: rgba(229, 62, 62, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Booking Summary Card */
+    .booking-summary {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 120px;
+    }
+
+    .summary-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: #2d3748;
+    }
+
+    .summary-title i {
+      color: #667eea;
+      font-size: 28px;
+    }
+
+    .room-preview {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      border-radius: 16px;
+      border: 2px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .room-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 8px;
+    }
+
+    .room-type {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .summary-grid {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .summary-label {
+      font-weight: 500;
+      color: #4a5568;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .summary-value {
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .total-section {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 2px solid rgba(102, 126, 234, 0.2);
+    }
+
+    .total-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .premium-price {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 24px;
+    }
+
+    /* Payment Card */
+    .payment-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .payment-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .payment-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .payment-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .payment-subtitle {
+      opacity: 0.9;
+      font-size: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .payment-content {
+      padding: 32px;
+    }
+
+    /* Payment Methods */
+    .payment-methods {
+      margin-bottom: 32px;
+    }
+
+    .methods-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #2d3748;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .method-option {
+      position: relative;
+    }
+
+    .method-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .method-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: #f7fafc;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .method-option label::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .method-option input:checked + label {
+      border-color: #667eea;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .method-option input:checked + label::before {
+      opacity: 0.1;
+    }
+
+    .method-icon {
+      font-size: 24px;
+      color: #4a5568;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .method-option input:checked + label .method-icon {
+      color: #667eea;
+      transform: scale(1.2);
+    }
+
+    .method-name {
+      font-weight: 600;
+      color: #2d3748;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Submit Button */
+    .submit-section {
+      margin-top: 32px;
+    }
+
+    .btn-pay {
+      width: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 18px 32px;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-pay::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: all 0.6s ease;
+    }
+
+    .btn-pay:hover::before {
+      left: 100%;
+    }
+
+    .btn-pay:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-pay:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-pay:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Security Badge */
+    .security-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(16, 185, 129, 0.1);
+      border-radius: 12px;
+      color: #059669;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 20px;
+      }
+
+      .booking-summary {
+        position: relative;
+        top: auto;
+      }
+
+      .method-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-container {
+        padding: 0 16px;
+      }
+
+      .nav-brand {
+        font-size: 24px;
+      }
+
+      .nav-menu {
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .payment-header,
+      .booking-summary,
+      .payment-content {
+        padding: 24px;
+      }
+
+      .summary-title,
+      .payment-title {
+        font-size: 20px;
+      }
+
+      .method-grid {
+        gap: 12px;
+      }
+
+      .method-option label {
+        padding: 16px;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="/rooms" class="nav-brand">
+        <i class="fas fa-door-open"></i>
+        ExpertBooking
+      </a>
+      <div class="nav-menu">
+        <div class="nav-user">
+          <i class="fas fa-user"></i>
+          <%= user.name %>
+        </div>
+        <a href="/auth/logout" class="btn-logout">
+          <i class="fas fa-sign-out-alt"></i>
+          Sair
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Booking Summary -->
+    <div class="booking-summary">
+      <div class="summary-title">
+        <i class="fas fa-calendar-check"></i>
+        Resumo da Reserva
+      </div>
+      
+      <div class="room-preview">
+        <div class="room-name"><%= room.name %></div>
+        <div class="room-type">Premium</div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span class="summary-label">
+            <i class="fas fa-calendar-alt"></i>
+            Data
+          </span>
+          <span class="summary-value"><%= new Date(bookingData.date).toLocaleDateString('pt-BR') %></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">
+            <i class="fas fa-clock"></i>
+            Horário
+          </span>
+          <span class="summary-value"><%= bookingData.startTime %> - <%= bookingData.endDateTime %></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">
+            <i class="fas fa-hourglass-half"></i>
+            Duração
+          </span>
+          <span class="summary-value"><%= bookingData.duration %> hora<%= bookingData.duration > 1 ? 's' : '' %></span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">
+            <i class="fas fa-users"></i>
+            Capacidade
+          </span>
+          <span class="summary-value"><%= room.capacity %> pessoas</span>
+        </div>
+      </div>
+
+      <div class="total-section">
+        <div class="total-item">
+          <span>Total a Pagar:</span>
+          <span class="premium-price">R$ <%= bookingData.totalPrice %></span>
+        </div>
+      </div>
+
+      <!-- Premium Benefits -->
+      <div style="margin-top: 24px; padding: 16px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border-radius: 12px;">
+        <div style="font-weight: 600; margin-bottom: 8px; color: #667eea;">
+          <i class="fas fa-crown"></i> Benefícios Premium
+        </div>
+        <ul style="list-style: none; font-size: 14px; color: #4a5568;">
+          <li><i class="fas fa-check" style="color: #10b981; margin-right: 8px;"></i> Ar condicionado</li>
+          <li><i class="fas fa-check" style="color: #10b981; margin-right: 8px;"></i> Equipamentos de alta qualidade</li>
+          <li><i class="fas fa-check" style="color: #10b981; margin-right: 8px;"></i> Suporte prioritário</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-card">
+      <div class="payment-header">
+        <i class="fas fa-lock" style="font-size: 32px; margin-bottom: 12px;"></i>
+        <h1 class="payment-title">Finalizar Pagamento</h1>
+        <p class="payment-subtitle">Complete sua reserva premium com segurança</p>
+      </div>
+      
+      <div class="payment-content">
+        <!-- Payment Methods -->
+        <form id="paymentForm" action="/rooms/process-payment" method="POST">
+          <div class="payment-methods">
+            <div class="methods-title">
+              <i class="fas fa-credit-card"></i>
+              Escolha a forma de pagamento
+            </div>
+            <div class="method-grid">
+              <div class="method-option">
+                <input type="radio" id="credit-card" name="paymentMethod" value="credit_card" required>
+                <label for="credit-card">
+                  <i class="fas fa-credit-card method-icon"></i>
+                  <span class="method-name">Cartão de Crédito</span>
+                </label>
+              </div>
+              <div class="method-option">
+                <input type="radio" id="debit-card" name="paymentMethod" value="debit_card">
+                <label for="debit-card">
+                  <i class="fas fa-money-check-alt method-icon"></i>
+                  <span class="method-name">Cartão de Débito</span>
+                </label>
+              </div>
+              <div class="method-option">
+                <input type="radio" id="pix" name="paymentMethod" value="pix">
+                <label for="pix">
+                  <i class="fas fa-qrcode method-icon"></i>
+                  <span class="method-name">PIX</span>
+                </label>
+              </div>
+              <div class="method-option">
+                <input type="radio" id="boleto" name="paymentMethod" value="boleto">
+                <label for="boleto">
+                  <i class="fas fa-barcode method-icon"></i>
+                  <span class="method-name">Boleto</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="submit-section">
+            <button type="submit" class="btn-pay" id="submitBtn">
+              <i class="fas fa-shield-alt"></i>
+              Confirmar Pagamento
+            </button>
+            
+            <div class="security-info">
+              <i class="fas fa-shield-alt"></i>
+              Pagamento 100% seguro e criptografado
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('paymentForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', function(e) {
+      const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      
+      if (!selectedMethod) {
+        e.preventDefault();
+        alert('Por favor, selecione um método de pagamento.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="loading"></div> Processando...';
+      
+      // Simular delay de processamento
+      setTimeout(() => {
+        form.submit();
+      }, 1500);
+    });
+
+    // Adicionar efeito visual nos métodos de pagamento
+    const methodOptions = document.querySelectorAll('.method-option input[type="radio"]');
+    methodOptions.forEach(option => {
+      option.addEventListener('change', function() {
+        // Remover classe active de todos
+        methodOptions.forEach(opt => {
+          opt.parentElement.classList.remove('selected');
+        });
+        
+        // Adicionar classe active no selecionado
+        if (this.checked) {
+          this.parentElement.classList.add('selected');
+        }
+      });
+    });
+
+    // Auto-scroll suave quando a página carrega
+    window.addEventListener('load', function() {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.5s ease-in-out';
+      
+      setTimeout(() => {
+        document.body.style.opacity = '1';
+      }, 100);
+    });
+  </script>
+
+</body>
+</html>
