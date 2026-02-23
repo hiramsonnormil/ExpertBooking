@@ -15,7 +15,7 @@ class TimerService {
       this.checkExpiredRooms();
     }, 60000); // 1 minuto
 
-    console.log('✅ Serviço de timer inicializado');
+    console.log('Serviço de timer inicializado');
   }
 
   async checkExpiredRooms() {
@@ -28,10 +28,10 @@ class TimerService {
 
       for (const room of expiredRooms) {
         await this.releaseRoom(room._id);
-        console.log(`🔓 Sala ${room.name} liberada automaticamente às ${now.toLocaleString('pt-BR')}`);
+        console.log(`Sala ${room.name} liberada automaticamente às ${now.toLocaleString('pt-BR')}`);
       }
     } catch (error) {
-      console.error('❌ Erro na verificação automática de salas:', error);
+      console.error('Erro na verificação automática de salas:', error);
     }
   }
 
@@ -50,7 +50,7 @@ class TimerService {
       }, timeRemaining);
 
       this.timers.set(roomId.toString(), timeout);
-      console.log(`⏰ Timer iniciado para sala ${roomId}, será liberada em ${Math.round(timeRemaining / 60000)} minutos`);
+      console.log(`Timer iniciado para sala ${roomId}, será liberada em ${Math.round(timeRemaining / 60000)} minutos`);
     }
   }
 
@@ -59,7 +59,7 @@ class TimerService {
     if (timer) {
       clearTimeout(timer);
       this.timers.delete(roomId.toString());
-      console.log(`⏹️ Timer cancelado para sala ${roomId}`);
+      console.log(`Timer cancelado para sala ${roomId}`);
     }
   }
 
@@ -90,10 +90,10 @@ class TimerService {
       // Remover timer
       this.stopTimer(roomId);
 
-      console.log(`✅ Sala ${room.name} liberada com sucesso`);
+      console.log(`Sala ${room.name} liberada com sucesso`);
 
     } catch (error) {
-      console.error('❌ Erro ao liberar sala:', error);
+      console.error('Erro ao liberar sala:', error);
     }
   }
 
@@ -107,7 +107,7 @@ class TimerService {
       }
       return 0;
     } catch (error) {
-      console.error('❌ Erro ao obter tempo restante:', error);
+      console.error('Erro ao obter tempo restante:', error);
       return 0;
     }
   }
@@ -126,9 +126,9 @@ class TimerService {
         }
       }
 
-      console.log(`🔄 ${occupiedRooms.length} timers restaurados`);
+      console.log(`${occupiedRooms.length} timers restaurados`);
     } catch (error) {
-      console.error('❌ Erro ao restaurar timers:', error);
+      console.error('Erro ao restaurar timers:', error);
     }
   }
 }
