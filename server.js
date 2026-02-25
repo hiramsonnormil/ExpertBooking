@@ -1,7 +1,7 @@
 import app from './src/app.js';
 import { timerService } from './src/services/timerService.js';
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // Inicializar serviços
 timerService.initialize();

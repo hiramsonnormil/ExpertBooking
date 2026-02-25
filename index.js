@@ -10,6 +10,7 @@ import { cadastrarUsuario } from './controller/signupController.js';
 import { autenticar } from './middlewares/routeProtection.js';
 import * as salaController from './controller/salaController.js';
 
+const PORT = process.env.PORT
 
 dotenv.config();
 
@@ -52,4 +53,4 @@ app.post('/salas/:id/reservar',autenticar, salaController.reservarSala);
 
 
 
-app.listen(3000, () => console.log(" Servidor rodando na porta 3000"));
+app.listen(PORT, () => console.log(`servidor rodando na porta ${PORT}`));

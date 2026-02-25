@@ -11,7 +11,7 @@ async function seedDatabase() {
   try {
     await connectDatabase();
     
-    console.log('🌱 Iniciando população do banco de dados...');
+    console.log('Iniciando população do banco de dados...');
 
     // Limpar dados existentes
     await Room.deleteMany({});
@@ -74,13 +74,13 @@ async function seedDatabase() {
 
     await Room.insertMany(rooms);
 
-    console.log('✅ Banco de dados populado com sucesso!');
-    console.log('👤 Usuário criado: user@example.com / senha: 123456');
-    console.log(`🏢 ${rooms.length} salas criadas`);
+    console.log('Banco de dados populado com sucesso!');
+    console.log('Usuário criado: user@example.com / senha: 123456');
+    console.log(`${rooms.length} salas criadas`);
     
     process.exit(0);
   } catch (error) {
-    console.error('❌ Erro ao popular banco:', error);
+    console.error(' Erro ao popular banco:', error);
     process.exit(1);
   }
 }
